@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Invoice</title>
+
+    <style>
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .invoice-box {
+        margin: auto;
+        padding: 30px;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+      }
+
+      .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+      }
+
+      .invoice-box table td {
+        padding: 5px;
+        vertical-align: top;
+      }
+
+      .invoice-box table tr td:nth-child(2) {
+        text-align: right;
+      }
+
+      .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+      }
+
+      .invoice-box table tr.top table td.title {
+        font-size: 24px;
+        line-height: 45px;
+        font-weight: bold;
+        color: #3b73a6;
+      }
+
+      .invoice-box table tr.information table td {
+        padding-bottom: 20px;
+      }
+
+      .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        color: #3b73a6;
+      }
+
+      .invoice-box table tr.details td {
+        padding-bottom: 20px;
+      }
+
+      .invoice-box table tr.item td {
+        border-bottom: 1px solid #eee;
+      }
+
+      .invoice-box table tr.item.last td {
+        border-bottom: none;
+      }
+
+      .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+
+        .invoice-box table tr.information table td {
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+      }
+
+      /** RTL **/
+      .invoice-box.rtl {
+        direction: rtl;
+        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+      }
+
+      .invoice-box.rtl table {
+        text-align: right;
+      }
+
+      .invoice-box.rtl table tr td:nth-child(2) {
+        text-align: left;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 50px;
+      }
+      .footer-text {
+        margin: 0;
+        font-size: 13px;
+        font-weight: bold;
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="invoice-box">
+      <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+          <td colspan="2">
+            <table>
+              <tr>
+                <td class="title"></td>
+
+                <td class="title">INVOICE</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr class="information">
+          <td colspan="2">
+            <table>
+              <tr>
+                <td>
+                  FROM<br />
+                  {{workerAddress}}<br />
+                  Phone | {{phoneNumber}}<br />
+                  Email | {{email}}<br />
+                </td>
+                <td>
+                  INVOICE# {{invoiceId}}<br />
+                  DATE {{startDate}} to {{endDate}}<br />
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr class="information">
+          <td colspan="2">
+            <table>
+              <tr>
+                <td>
+                  TO<br />
+                  Accounts<br />
+                  Platnum Group Int Pty Ltd<br />
+                  19B Wayne Court<br />
+                  Dandenong, VIC 3175<br />
+                  accounts@ondemandautocare.com.au
+                </td>
+
+                <td>FOR Project or service description</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr class="heading">
+          <td>Description</td>
+
+          <td>Amount</td>
+        </tr>
+        {{#each records}}
+        <tr class="item">
+          <td>
+            {{this.logginDate}} {{this.startTime}} to {{this.endTime}} {{this.workingHours}}hs * 25 = ${{this.total}}.00
+          </td>
+
+          <td>${{this.total}}.00</td>
+        </tr>
+        {{/each}}
+        <tr class="item">
+          <td>Total</td>
+
+          <td>${{totalPayment}}.00</td>
+        </tr>
+      </table>
+      <p class="footer-text">Make all checks payable to Account Name: {{nameOfBank}}</p>
+      <p class="footer-text">BSB: {{bsb}}</p>
+      <p class="footer-text">Account number: {{accountNumber}}</p>
+
+      <div class="footer">
+        <p class="footer-text">
+          If you have any questions concerning this invoice, feel free to email us | accounts@ondemandautocare.com.au
+        </p>
+        <p class="footer-text">THANK YOU FOR YOUR BUSINESS!</p>
+      </div>
+    </div>
+  </body>
+</html>
