@@ -1,3 +1,4 @@
+/* eslint-disable no-sparse-arrays */
 const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const catchAsync = require('../utils/catchAsync');
@@ -12,7 +13,7 @@ const createFarm = catchAsync(async (req, res) => {
 
 const getFarms = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', , 'status']);
-  const options = { ...pick(req.query, ['sortBy', 'limit', 'page']), populate: 'farmers.farmer' }; //populate farmer
+  const options = { ...pick(req.query, ['sortBy', 'limit', 'page']), populate: 'farmers.farmer' }; // populate farmer
 
   const result = await farmService.queryFarms(filter, options);
   res.send(result);

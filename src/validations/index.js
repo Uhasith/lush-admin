@@ -7,3 +7,4 @@ module.exports.reportValidation = require('./report.validation');
 module.exports.categoryValidation = require('./category.validation');
 module.exports.paymentValidation = require('./payment.validation');
 module.exports.farmValidation = require('./farm.validation');
+module.exports.orderValidation = require('./order.validation');
