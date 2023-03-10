@@ -34,6 +34,10 @@ const productSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    hasPromotion: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: productStatuses,

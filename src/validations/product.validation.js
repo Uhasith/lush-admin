@@ -62,6 +62,7 @@ const updateProduct = {
       description: Joi.string(),
       weight: Joi.string(),
       unitType: Joi.string(),
+      hasPromotion: Joi.boolean(),
       category: Joi.custom(objectId),
       subCategories: Joi.array().items(Joi.string()),
       images: Joi.array().items(Joi.string()),

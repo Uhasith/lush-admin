@@ -22,15 +22,13 @@ import moment from 'moment';
 import _ from 'lodash';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { deleteProduct } from '../../../store/actions/product.action';
+import { deleteProduct, updateProduct } from '../../../store/actions/product.action';
 import Label from 'src/components/Label';
 import Modal from 'src/components/Modal';
 import CreateProductForm from './CreateProductForm';
 import { BASE_URL } from 'src/constants/common-configurations';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-
 
 interface ProductTableProps {
   products?: any[];
@@ -51,6 +49,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
   const [limit, setLimit] = useState<number>(5);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
 
   const theme = useTheme();
 
@@ -103,6 +102,14 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
   const handleEditProduct = (product: any) => {
     setSelectedProduct(product);
     setIsOpen(true);
+  };
+
+  const handleToggle = (id,hasPromotion) => {
+
+    dispatch(updateProduct({  
+      id: id,
+      data: Object.assign({ hasPromotion: !hasPromotion }) 
+    }));
   };
 
   return (
@@ -167,19 +174,32 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                     align="center"
                     sx={{ display: 'flex', gap: 1, alignItems: 'center' }}
                   >
-                    {product.images[0] && (
-                    <Avatar
-                      sx={{
-                        width: theme.spacing(8),
-                        height: theme.spacing(11)
-                      }}
-                      variant="rounded"
-                      alt={''}
-                      src={product.images[0].includes('http://') || product.images[0].includes('https://')
-                      ? product.images[0]
-                      : `${BASE_URL}/documents/product-img/${product.images[0]}`
-                    }
-                    />)}
+                    {product.images[0] ? (
+                      <Avatar
+                        sx={{
+                          width: theme.spacing(8),
+                          height: theme.spacing(11)
+                        }}
+                        variant="rounded"
+                        alt={''}
+                        src={
+                          product.images[0].includes('http://') ||
+                          product.images[0].includes('https://')
+                            ? product.images[0]
+                            : `${BASE_URL}/documents/product-img/${product.images[0]}`
+                        }
+                      />
+                    ) : (
+                      <Avatar
+                        sx={{
+                          width: theme.spacing(8),
+                          height: theme.spacing(11)
+                        }}
+                        variant="rounded"
+                        alt={''}
+                        src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+                      />
+                    )}
                     <Typography
                       variant="body1"
                       fontWeight="bold"
@@ -253,17 +273,18 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                     )}
                   </TableCell>
 
-                  {/* ///////////////////////Promotion button/////////////////// */}
                   <TableCell align="center">
-                  <FormControlLabel
-          value="start"
-          control={<Switch color="primary" />}
-          label=""
-          labelPlacement="start"
-        />
+                    <FormControlLabel
+                      value="start"
+                      control={<Switch  
+                        color="primary"
+                        checked={product.hasPromotion}
+                        onChange={() => handleToggle(product.id,product.hasPromotion)} />}
+                      label=""
+                      labelPlacement="start"
+                    />
                   </TableCell>
-                  {/* ///////////////////////Promotion button/////////////////// */}
-
+            
                   <TableCell align="center">
                     <Typography
                       variant="body1"
