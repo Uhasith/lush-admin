@@ -9,6 +9,7 @@ const documentRoute = require('./document.route');
 const categoryRoute = require('./category.route');
 const paymentRoute = require('./payment.route');
 const farmRoute = require('./farm.route');
+const orderRoute = require('./order.route');
 
 const router = express.Router();
 
@@ -49,6 +50,10 @@ const defaultRoutes = [
   {
     path: '/farms',
     route: farmRoute,
+  },
+  {
+    path: '/orders',
+    route: orderRoute,
   },
 ];
 

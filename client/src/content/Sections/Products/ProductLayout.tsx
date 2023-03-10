@@ -64,6 +64,8 @@ const CardHeaderComponent = styled(CardHeader)(
 
 function ProductLayout() {
   const dispatch = useDispatch();
+  const currentUser = useSelector(({ auth }: any) => auth.user);
+
   const theme = useTheme();
   const [filters, setFilters] = useState<Filters>({
     name: '',
@@ -75,6 +77,8 @@ function ProductLayout() {
     ({ product }: RootStateOrAny) => product.list
   );
   const loading = useSelector(({ common }: RootStateOrAny) => common.loading);
+
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     dispatch(
@@ -94,6 +98,16 @@ function ProductLayout() {
     );
   }, []);
 
+  const userRole = currentUser?.role;
+
+  useEffect(() => {
+    if (userRole === 'Worker') {
+      const newList = productList?.filter(
+        (product) => product?.createdBy?.id === currentUser?._id
+      );
+      setList(newList);
+    }
+  }, [userRole]);
   const onReportSearch = ({
     name,
     status,
@@ -235,7 +249,9 @@ function ProductLayout() {
           <Divider />
 
           {productList?.length > 0 ? (
-            <ProductTable products={productList} />
+            <ProductTable
+              products={userRole === 'Worker' ? list : productList}
+            />
           ) : (
             <Box
               sx={{

@@ -11,3 +11,4 @@ module.exports.pdfService = require('./pdf.service');
 module.exports.productService = require('./product.service');
 module.exports.categoryService = require('./category.service');
 module.exports.farmService = require('./farm.service');
+module.exports.orderService = require('./order.service');

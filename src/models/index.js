@@ -7,4 +7,5 @@ module.exports.Message = require('./message.model');
 module.exports.Payment = require('./payment.model');
 module.exports.Category = require('./category.model');
 module.exports.Product = require('./product.model');
+module.exports.Order = require('./order.model');
 module.exports.Farm = require('./farm.model');
