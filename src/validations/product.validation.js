@@ -18,8 +18,6 @@ const createProducts = {
   ),
 };
 
-
-
 const getProducts = {
   query: Joi.object().keys({
     status: Joi.string(),

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const { productStatuses } = require('../config/product');
+// eslint-disable-next-line import/order
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 const { toJSON, paginate } = require('./plugins');
 
