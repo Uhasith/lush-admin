@@ -4,6 +4,7 @@ import EngineeringTwoToneIcon from '@mui/icons-material/EngineeringTwoTone';
 import GroupAddTwoToneIcon from '@mui/icons-material/GroupAddTwoTone';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
 import AgricultureIcon from '@mui/icons-material/Agriculture';
 export interface MenuItem {
@@ -136,7 +137,16 @@ const menuItems = (isAdmin: boolean): MenuItems[] => {
             link: '/app/products'
           }
         ]
-      }
+      },{
+        heading: '',
+        items: [
+          {
+            name: 'Wallet',
+            icon: AccountBalanceWalletIcon,
+            link: '/app/wallet'
+          }
+        ]
+      },
     ];
   }
 };

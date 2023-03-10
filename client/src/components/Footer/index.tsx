@@ -21,7 +21,7 @@ function Footer() {
         >
           <Box>
             <Typography variant="subtitle1">
-              &copy; 2022 - Lush Produce Admin Dashboard
+              &copy; 2023 - Lush Produce Admin Dashboard
             </Typography>
           </Box>
         </Box>
