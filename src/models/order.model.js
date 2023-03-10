@@ -40,48 +40,51 @@ const orderProduct = new mongoose.Schema(
   { _id: false }
 );
 
-const shippingSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true,
+const shippingSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    address1: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    address2: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    country: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    zip: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  address1: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  address2: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  country: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  zip: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  phoneNumber: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-});
+  { _id: false }
+);
 
 const orderSchema = mongoose.Schema(
   {
@@ -98,6 +101,11 @@ const orderSchema = mongoose.Schema(
     },
     shippingDetails: {
       type: shippingSchema,
+      required: true,
+    },
+    buyer: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
       required: true,
     },
   },

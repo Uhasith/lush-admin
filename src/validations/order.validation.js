@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { objectId } = require('./custom.validation');
 
-const createFarm = {
+const createOrder = {
   body: Joi.object()
     .keys({
       status: Joi.string().required(),
@@ -28,10 +28,11 @@ const createFarm = {
         email: Joi.string().required(),
         phoneNumber: Joi.string().required(),
       }),
+      buyer: Joi.required().custom(objectId),
     })
     .required(),
 };
 
 module.exports = {
-  createFarm,
+  createOrder,
 };

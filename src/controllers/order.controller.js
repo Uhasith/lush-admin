@@ -12,8 +12,8 @@ const createOrder = catchAsync(async (req, res) => {
 });
 
 const getOrders = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['name', , 'status']);
-  const options = { ...pick(req.query, ['sortBy', 'limit', 'page']), populate: 'products.buyer , products.product' };
+  const filter = pick(req.query, ['updatedAt', 'status', 'buyer']);
+  const options = { ...pick(req.query, ['sortBy', 'limit', 'page']), populate: 'products.buyer , products.product , buyer' };
   const result = await orderService.queryOrders(filter, options);
   res.send(result);
 });
