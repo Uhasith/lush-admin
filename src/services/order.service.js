@@ -31,7 +31,7 @@ const queryOrders = async (filter, options) => {
  * @returns {Promise<Order>}
  */
 const getOrderById = async (id) => {
-  const foundOrder = await Order.findById(id).populate(['products.buyer', 'products.product']);
+  const foundOrder = await Order.findById(id).populate(['products.buyer', 'products.product', 'buyer']);
 
   return foundOrder;
 };
