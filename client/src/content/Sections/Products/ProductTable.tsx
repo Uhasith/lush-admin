@@ -112,6 +112,9 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
     }));
   };
 
+
+  
+
   return (
     <>
       <TableContainer>

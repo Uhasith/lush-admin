@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import Wallet from './content/Sections/Wallet';
 
 const Loader = (Component: any) => (props: any) =>
   (
@@ -165,6 +166,9 @@ const routes: any = (isAuthenticated) => [
       {
         path: 'products',
         element: <Products />
+      },{
+        path: 'wallet',
+        element: <Wallet />
       }
     ]
   }
