@@ -1,6 +1,5 @@
 import { FC, ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import leadingZeroes from 'leading-zeroes';
 import {
   Box,
   TableContainer,
@@ -12,22 +11,12 @@ import {
   TableRow,
   useTheme,
   Typography,
-  Tooltip,
-  IconButton,
-  Chip,
-  Avatar
+  Chip
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import moment from 'moment';
-import _ from 'lodash';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import {
-  deleteProduct,
-  updateProduct
-} from '../../../store/actions/product.action';
-import Label from 'src/components/Label';
 
+import Label from 'src/components/Label';
 
 import Stack from '@mui/material/Stack';
 interface ProductTableProps {
@@ -90,24 +79,6 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
     return <Label color={color}>{text}</Label>;
   };
 
-  const handleDeleteProduct = (id: string) => {
-    dispatch(deleteProduct(id));
-  };
-
-  const handleEditProduct = (product: any) => {
-    setSelectedProduct(product);
-    setIsOpen(true);
-  };
-
-  const handleToggle = (id, hasPromotion) => {
-    dispatch(
-      updateProduct({
-        id: id,
-        data: Object.assign({ hasPromotion: !hasPromotion })
-      })
-    );
-  };
-
   return (
     <>
       <TableContainer>
@@ -135,7 +106,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      ID151
+                      XLR {product?.oderId}
                     </Typography>
                   </TableCell>
 
@@ -147,7 +118,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      Praveen
+                      {product?.buyerFirstName}
                     </Typography>
                   </TableCell>
 
@@ -198,8 +169,9 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       sx={{ textTransform: 'capitalize' }}
                     >
                       <Stack direction="row" spacing={1}>
-                        <Chip label="Apple&#215;2" />
-                        <Chip label="Rice&#215;2" />
+                        <Chip
+                          label={`${product?.productName} × ${product?.productQty}`}
+                        />
                       </Stack>
                     </Typography>
                   </TableCell>
@@ -212,7 +184,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      {getProductStatusLabel(product.status)}
+                      {getProductStatusLabel(product?.status)}
                     </Typography>
                   </TableCell>
 
@@ -224,7 +196,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      50&#36;
+                      {product?.price}$
                     </Typography>
                   </TableCell>
                 </TableRow>
