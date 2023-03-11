@@ -20,6 +20,7 @@ import paymentReducer from './payment.reducer';
 import documentReducer from './document.reducer';
 import productReducer from './product.reducer';
 import farmReducer from './farm.reducer';
+import orderReducer from './order.reducer';
 
 const rootPersistConfig = {
   key: 'root',
@@ -39,7 +40,8 @@ const rootPersistConfig = {
     'document',
     'payment',
     'product',
-    'farm'
+    'farm',
+    'order',
   ]
 };
 
@@ -59,7 +61,8 @@ const appReducer = combineReducers({
   document: documentReducer,
   payment: paymentReducer,
   product: productReducer,
-  farm: farmReducer
+  farm: farmReducer,
+  order: orderReducer,
 });
 
 const rootReducer = (state: any, action: any) => {

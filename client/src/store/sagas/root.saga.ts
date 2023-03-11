@@ -11,6 +11,7 @@ import paymentSaga from './payment.saga';
 import DocumentSaga from './document.saga';
 import ProductSaga from './product.saga';
 import farmSaga from './farm.saga';
+import orderSaga from './order.saga';
 
 export default function* rootSaga() {
   yield all([
@@ -24,6 +25,7 @@ export default function* rootSaga() {
     paymentSaga(),
     DocumentSaga(),
     ProductSaga(),
-    farmSaga()
+    farmSaga(),
+    orderSaga(),
   ]);
 }

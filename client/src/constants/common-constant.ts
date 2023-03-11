@@ -95,6 +95,12 @@ export const UPDATE_FARM = 'UPDATE_FARM';
 export const ADD_FARM = 'ADD_FARM';
 export const DELETE_FARM = 'DELETE_FARM';
 
+// order actions
+export const FETCH_ALL_ORDERS = 'FETCH_ALL_ORDERS';
+export const SET_ALL_ORDERS = 'SET_ALL_ORDERS';
+export const UPDATE_ORDER = 'UPDATE_ORDER';
+export const ADD_ORDER = 'ADD_ORDER';
+
 // product actions
 export const FETCH_ALL_PRODUCTS = 'FETCH_ALL_PRODUCTS';
 export const SET_ALL_PRODUCTS = 'SET_ALL_PRODUCTS';
