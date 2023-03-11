@@ -102,7 +102,7 @@ function OrderLayout() {
 
       return {
         oderId: order?.orderId,
-        buyerFirstName: _product?.buyer?.firstName,
+        buyerFirstName: `${_product?.buyer?.firstName} ${_product?.buyer?.lastName}`,
         productName: _product?.product?.name,
         productQty: _product?.qty,
         status: order?.status,
