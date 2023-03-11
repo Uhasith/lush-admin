@@ -4,16 +4,16 @@ import PageHeader from './PageHeader';
 
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import Footer from 'src/components/Footer';
-import ProductLayout from './ProductLayout';
+import WalletLayout from './WalletLayout';
 
 function Wallet() {
   return (
     <>
       <Helmet>
-        <title>Products</title>
+        <title>Wallet</title>
       </Helmet>
       <PageTitleWrapper maxWidth="xl">
-      <PageHeader />
+        <PageHeader />
       </PageTitleWrapper>
       <Container maxWidth="xl">
         <Grid
@@ -24,7 +24,7 @@ function Wallet() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <ProductLayout />
+            <WalletLayout />
           </Grid>
         </Grid>
       </Container>

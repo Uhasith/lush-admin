@@ -92,7 +92,7 @@ const HeaderUserbox = () => {
           <UserBoxText>
             <UserBoxLabel variant="body1">{`${currentUser?.firstName} ${currentUser?.lastName}`}</UserBoxLabel>
             <UserBoxDescription variant="body2">
-              {currentUser?.role == 'Admin' ? 'Admin' : 'Farmer'}
+              {currentUser?.role === 'Admin' ? 'Admin' : 'Farmer'}
             </UserBoxDescription>
           </UserBoxText>
         </Hidden>

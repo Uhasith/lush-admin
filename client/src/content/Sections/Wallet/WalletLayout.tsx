@@ -2,7 +2,6 @@ import { useEffect, useState, ChangeEvent } from 'react';
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import moment from 'moment';
-import TextField from '@mui/material/TextField';
 import {
   Box,
   CircularProgress,
@@ -17,9 +16,8 @@ import {
   useTheme
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import CachedIcon from '@mui/icons-material/Cached';
-import ProductTable from './ProductTable';
-import { fetchAllProducts } from '../../../store/actions/product.action';
+import WalletTable from './WalletTable';
+import { fetchAllOrders } from '../../../store/actions/order.action';
 import { DATE_FORMAT } from 'src/constants/common-configurations';
 import { fetchAllCategories } from 'src/store/actions/category.action';
 interface Filters {
@@ -43,17 +41,6 @@ const statusOptions = [
   }
 ];
 
-const sortOptions = [
-  {
-    id: 'asc',
-    name: 'Asc'
-  },
-  {
-    id: 'desc',
-    name: 'Desc'
-  }
-];
-
 const CardHeaderComponent = styled(CardHeader)(
   () => `
     .MuiCardHeader-action{
@@ -62,23 +49,25 @@ const CardHeaderComponent = styled(CardHeader)(
 `
 );
 
-function ProductLayout() {
+function OrderLayout() {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const [orderItems, setOrderItems] = useState([]);
+
   const [filters, setFilters] = useState<Filters>({
     name: '',
     status: 'All',
     sorted: 'desc'
   });
 
-  const productList = useSelector(
-    ({ product }: RootStateOrAny) => product.list
-  );
+  const orderList = useSelector(({ order }: RootStateOrAny) => order.list);
+
   const loading = useSelector(({ common }: RootStateOrAny) => common.loading);
+  const currentUser = useSelector(({ auth }: RootStateOrAny) => auth.user);
 
   useEffect(() => {
     dispatch(
-      fetchAllProducts({
+      fetchAllOrders({
         status: 'All',
         sorted: 'desc'
       })
@@ -93,6 +82,37 @@ function ProductLayout() {
       })
     );
   }, []);
+
+  useEffect(() => {
+    filterOrderList();
+  }, [orderList]);
+
+  const filterOrderList = () => {
+    const updatedList = orderList?.filter((order: any) => {
+      const productOwner = order.products.filter(
+        (product: any) => product?.product?.createdBy === currentUser?._id
+      );
+      return productOwner.length > 0;
+    });
+
+    const result = updatedList.map((order: any) => {
+      const _product = order.products.find(
+        (product: any) => product.product.createdBy === currentUser?._id
+      );
+
+      return {
+        oderId: order?.orderId,
+        buyerFirstName: _product?.buyer?.firstName,
+        productName: _product?.product?.name,
+        productQty: _product?.qty,
+        status: order?.status,
+        price: _product?.price,
+        orderdDate: order?.createdAt
+      };
+    });
+
+    setOrderItems(result);
+  };
 
   const onReportSearch = ({
     name,
@@ -109,7 +129,7 @@ function ProductLayout() {
       endDate: moment(endDate).format(DATE_FORMAT)
     };
 
-    dispatch(fetchAllProducts(payload));
+    dispatch(fetchAllOrders(payload));
     setFilters({ name: '', status: 'All', sorted: 'desc' });
   };
 
@@ -123,32 +143,6 @@ function ProductLayout() {
     setFilters((prevFilters) => ({
       ...prevFilters,
       status: value
-    }));
-  };
-
-  const handleSortChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    let value = null;
-
-    if (e.target.value !== 'all') {
-      value = e.target.value;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      sorted: value
-    }));
-  };
-
-  const handleSearchInput = (e: ChangeEvent<HTMLInputElement>): void => {
-    let value = null;
-
-    if (e.target.value !== 'all') {
-      value = e.target.value;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      name: value
     }));
   };
 
@@ -171,13 +165,6 @@ function ProductLayout() {
                 }}
               >
                 <FormControl sx={{ width: '180px' }} variant="outlined">
-                  <TextField
-                    label="Product Search"
-                    onChange={handleSearchInput}
-                  />
-                </FormControl>
-
-                <FormControl sx={{ width: '180px' }} variant="outlined">
                   <InputLabel> Payment Status</InputLabel>
                   <Select
                     value={filters.status || 'All'}
@@ -185,22 +172,7 @@ function ProductLayout() {
                     label="Status"
                     autoWidth
                   >
-                    {statusOptions.map((statusOption) => (
-                      <MenuItem key={statusOption.id} value={statusOption.id}>
-                        {statusOption.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ width: '180px' }} variant="outlined">
-                  <InputLabel>Sort By</InputLabel>
-                  <Select
-                    value={filters.sorted || 'desc'}
-                    onChange={handleSortChange}
-                    label="Sort"
-                    autoWidth
-                  >
-                    {sortOptions.map((statusOption) => (
+                    {statusOptions?.map((statusOption) => (
                       <MenuItem key={statusOption.id} value={statusOption.id}>
                         {statusOption.name}
                       </MenuItem>
@@ -234,8 +206,8 @@ function ProductLayout() {
 
           <Divider />
 
-          {productList?.length > 0 ? (
-            <ProductTable products={productList} />
+          {orderItems?.length > 0 ? (
+            <WalletTable products={orderItems} />
           ) : (
             <Box
               sx={{
@@ -245,7 +217,7 @@ function ProductLayout() {
                 height: '50vh'
               }}
             >
-              <h4>No products found</h4>
+              <h4>No wallet items found</h4>
             </Box>
           )}
         </Card>
@@ -268,4 +240,4 @@ function ProductLayout() {
   );
 }
 
-export default ProductLayout;
+export default OrderLayout;
