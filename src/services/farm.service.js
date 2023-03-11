@@ -81,7 +81,7 @@ const getFarmById = async (id) => {
  * @returns {Promise<Farm>}
  */
 const updateFarmById = async (farmId, updateBody, _user) => {
-  const farm = await getFarmById(farmId);
+  const farm = await Farm.findById(farmId).populate('farmers.farmer');
   if (!farm) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Farm not found');
   }
