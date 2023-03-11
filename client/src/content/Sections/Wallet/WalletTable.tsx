@@ -15,6 +15,9 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import moment from 'moment';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import { updateOrder } from '../../../store/actions/order.action';
 
 import Label from 'src/components/Label';
 
@@ -79,6 +82,22 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
     return <Label color={color}>{text}</Label>;
   };
 
+  const handleToggle = (id, status) => {
+    let newStatus;
+    if (status !== 'Dispatched') {
+      newStatus = 'Dispatched';
+    } else {
+      newStatus = 'Pending';
+    }
+
+    dispatch(
+      updateOrder({
+        id: id,
+        data: { status: newStatus }
+      })
+    );
+  };
+
   return (
     <>
       <TableContainer>
@@ -90,6 +109,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
               <TableCell align="center">Ordered Date</TableCell>
               <TableCell align="center">Delivery Date</TableCell>
               <TableCell align="center">Product</TableCell>
+              <TableCell align="center">Change Delivery Status</TableCell>
               <TableCell align="center">Delivery Status</TableCell>
               <TableCell align="center">Total</TableCell>
             </TableRow>
@@ -174,6 +194,25 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                         />
                       </Stack>
                     </Typography>
+                  </TableCell>
+
+                  <TableCell align="center">
+                    <FormControlLabel
+                      value="start"
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={
+                            product?.status == 'Dispatched' ? true : false
+                          }
+                          onChange={() =>
+                            handleToggle(product.oderId, product.status)
+                          }
+                        />
+                      }
+                      label=""
+                      labelPlacement="start"
+                    />
                   </TableCell>
 
                   <TableCell align="center">
