@@ -18,7 +18,7 @@ const orderProduct = new mongoose.Schema(
       required: true,
     },
     qty: {
-      type: Number,
+      type: String,
       required: true,
       trim: true,
     },
