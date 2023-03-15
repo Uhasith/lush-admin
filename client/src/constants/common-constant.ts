@@ -104,6 +104,7 @@ export const ADD_ORDER = 'ADD_ORDER';
 // product actions
 export const FETCH_ALL_PRODUCTS = 'FETCH_ALL_PRODUCTS';
 export const SET_ALL_PRODUCTS = 'SET_ALL_PRODUCTS';
+export const SET_UPDATED_PRODUCT = 'SET_UPDATED_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';

@@ -9,7 +9,8 @@ import {
   SET_ALL_PRODUCTS,
   UPDATE_PRODUCT,
   ADD_PRODUCT,
-  DELETE_PRODUCT
+  DELETE_PRODUCT,
+  SET_UPDATED_PRODUCT
 } from '../../constants/common-constant';
 import {
   createProductApi,
@@ -58,9 +59,10 @@ export function* createProduct({
     yield put({ type: START_LOADING });
 
     const newProduct = yield call(createProductApi, payload);
-  
+
     if (newProduct.status === 201) {
-      yield put({ type: FETCH_ALL_PRODUCTS });
+      const filters = { sorted: 'desc' };
+      yield put({ type: FETCH_ALL_PRODUCTS, payload: filters });
     }
     const message = 'Product successfully added';
     yield put({ type: SET_SUCCESS_MESSAGE, payload: message });
@@ -85,12 +87,12 @@ export function* updateProduct({
     if (response.data) {
       const message = 'Product successfully updated';
       yield put({ type: SET_SUCCESS_MESSAGE, payload: message });
-      yield put({ type: FETCH_ALL_PRODUCTS });
+      yield put({ type: SET_UPDATED_PRODUCT, payload: response.data });
     }
 
     yield put({ type: END_LOADING });
   } catch (error) {
-    const message = 'Worker updating failed';
+    const message = 'Product updating failed';
     yield put({ type: SET_ERROR_MESSAGE, payload: message });
     yield put({ type: END_LOADING });
   }
@@ -106,10 +108,10 @@ export function* deleteProduct({
     yield put({ type: START_LOADING });
 
     yield call(deleteProductApi, payload);
-
+    const filters = { sorted: 'desc' };
     const message = 'Product deleted successfully';
     yield put({ type: SET_SUCCESS_MESSAGE, payload: message });
-    yield put({ type: FETCH_ALL_PRODUCTS });
+    yield put({ type: FETCH_ALL_PRODUCTS, payload: filters });
 
     yield put({ type: END_LOADING });
   } catch (error) {
