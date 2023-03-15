@@ -6,11 +6,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import { createProduct, updateProduct } from 'src/store/actions/product.action';
@@ -18,13 +13,11 @@ import { useEffect, useRef, useState } from 'react';
 import ImageUpload from 'src/components/ImageUpload';
 import axios from 'axios';
 import { BASE_URL } from 'src/constants/common-configurations';
-import Switch from '@mui/material/Switch';
 
 interface CreateProductFormProps {
   onSuccess(): any;
   formData?: any;
 }
-
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
@@ -90,9 +83,7 @@ const CreateProductForm = ({ onSuccess, formData }: CreateProductFormProps) => {
           })
         );
       } else {
-        dispatch(
-          createProduct([{ ...paload, images: results.data }])
-        );
+        dispatch(createProduct([{ ...paload, images: results.data }]));
       }
 
       setIsBuffering(false);
@@ -298,35 +289,7 @@ const CreateProductForm = ({ onSuccess, formData }: CreateProductFormProps) => {
                   value={values.description}
                   variant="outlined"
                 />
-               {/* //////////////////////Flash deal checkbox//////////////////////////////////// */}
 
-
-
-               {/* <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Promote This Product</FormLabel>
-      <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group">
-        <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-        <FormControlLabel value="no" control={<Radio />} label="No" />
-     
-      </RadioGroup>
-    </FormControl> */}
-
-
-
-  
-<br />
-  <hr />
-
-    <FormControlLabel
-          value="start"
-          control={<Switch color="primary" />}
-          label="Promote This Product"
-          labelPlacement="start"
-        />
-
-
-               {/* ////////////////////////////////////////////////////////// */}
-                
                 <Box sx={{ py: 2 }}>
                   {isBuffering ? (
                     <Box
