@@ -168,7 +168,7 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ applicants }) => {
               <TableCell align="center">E-mail</TableCell>
               <TableCell align="center">Phone Number</TableCell>
               <TableCell align="center">Address</TableCell>
-              <TableCell align="center">Applied as:</TableCell>
+              <TableCell align="center">Farmer's Market</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
@@ -245,7 +245,7 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ applicants }) => {
                   </TableCell>
 
                   <TableCell align="center">{applicant?.address}</TableCell>
-                  <TableCell align="center">{applicant?.userType}</TableCell>
+                  <TableCell align="center">{applicant?.farm?.name}</TableCell>
                   <TableCell align="center">
                     {getStatusLabel(applicant?.status)}
                   </TableCell>
