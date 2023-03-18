@@ -56,7 +56,6 @@ export function* createCategory({
 }): any {
   try {
     yield put({ type: START_LOADING });
-
     const newCategory = yield call(createCategoryApi, payload);
 
     if (newCategory.data) {
