@@ -153,7 +153,7 @@ const ReportTable: FC<ReportTableProps> = ({ categories }) => {
                       gutterBottom
                       noWrap
                     >
-                      {`C-${leadingZeroes(category?.categoryId, 3)}`}
+                       {category?.id || '-'}
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
