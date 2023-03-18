@@ -25,7 +25,7 @@ const CreateCategoryForm = ({
   formData
 }: CreateCategoryFormProps) => {
   const dispatch = useDispatch();
-
+  const currentUser = useSelector(({ auth }: any) => auth.user);
   const loading = useSelector(({ common }: RootStateOrAny) => common.loading);
 
   const initialFormValues = {
@@ -57,7 +57,7 @@ const CreateCategoryForm = ({
     if (formData) {
       dispatch(updateCategory({ id: formData.id, data: paload }));
     } else {
-      dispatch(createCategory(paload));
+      dispatch(createCategory({...paload, createdBy: currentUser?._id}));
     }
     onSuccess();
   };

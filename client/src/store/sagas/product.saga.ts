@@ -57,7 +57,6 @@ export function* createProduct({
 }): any {
   try {
     yield put({ type: START_LOADING });
-
     const newProduct = yield call(createProductApi, payload);
 
     if (newProduct.status === 201) {

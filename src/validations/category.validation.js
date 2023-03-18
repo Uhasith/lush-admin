@@ -13,6 +13,7 @@ const createCategory = {
       )
       .min(1),
     description: Joi.string(),
+    createdBy: Joi.string(),
     status: Joi.string().required().valid('Active', 'Inactive'),
   }),
 };
@@ -22,6 +23,7 @@ const getCategories = {
     name: Joi.string(),
     status: Joi.string().valid('Active', 'Inactive'),
     sortBy: Joi.string(),
+    createdBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
   }),

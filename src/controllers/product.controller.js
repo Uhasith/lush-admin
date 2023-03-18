@@ -24,7 +24,6 @@ const getProducts = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['status', 'name', 'createdBy']);
   const options = {
     ...pick(req.query, ['sortBy', 'limit', 'page']),
-    //sortBy: '-createdAt',
     populate: 'category, createdBy'
   }; // populate category
   const result = await productService.queryProducts(filter, options);

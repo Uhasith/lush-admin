@@ -41,6 +41,11 @@ const categorySchema = mongoose.Schema(
       default: 'N/A',
       required: true,
     },
+    createdBy: {
+      type: mongoose.SchemaTypes.ObjectId,
+      required: true,
+      ref: 'User',
+    },
   },
   {
     timestamps: true,
