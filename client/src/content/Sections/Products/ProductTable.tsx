@@ -51,6 +51,13 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
 
+
+
+  //////////////////////////3.1.2023/////////////////////////////////////////
+  
+  //////////////////////////3.1.2023/////////////////////////////////////////
+
+  
   const theme = useTheme();
 
   const applyPagination = (
@@ -118,6 +125,13 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
   return (
     <>
       <TableContainer>
+
+    {/* //////////////////////////3.15.2023///////////////////////////////////////// */}
+    
+
+
+    {/* //////////////////////////3.15.2023///////////////////////////////////////// */}
+    
         <TableComponent>
           <TableHead>
             <TableRow>
@@ -280,6 +294,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                     <FormControlLabel
                       value="start"
                       control={<Switch  
+                      
                         color="primary"
                         checked={product.hasPromotion}
                         onChange={() => handleToggle(product.id,product.hasPromotion)} />}
