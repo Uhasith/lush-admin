@@ -91,7 +91,7 @@ function Wallets() {
               </Typography>
               <Box sx={{ pt: 3 }}>
                 <Typography variant="h3" gutterBottom noWrap>
-                  $3,586.22
+                  €3,586.22
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
                   1.25843 BTC
@@ -117,7 +117,7 @@ function Wallets() {
               </Typography>
               <Box sx={{ pt: 3 }}>
                 <Typography variant="h3" gutterBottom noWrap>
-                  $586.83
+                  €586.83
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
                   5,783 XRP
@@ -143,7 +143,7 @@ function Wallets() {
               </Typography>
               <Box sx={{ pt: 3 }}>
                 <Typography variant="h3" gutterBottom noWrap>
-                  $54,985.00
+                  €54,985.00
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
                   34,985 ADA

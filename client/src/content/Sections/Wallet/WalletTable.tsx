@@ -235,7 +235,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      {product?.price}$
+                      {product?.price}€
                     </Typography>
                   </TableCell>
                 </TableRow>

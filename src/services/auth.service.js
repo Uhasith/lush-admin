@@ -107,7 +107,10 @@ const verifyEmail = async (verifyEmailToken) => {
 const checkIfEmailExists = async (email) => {
   const user = await userService.getUserByEmail(email);
   if (user) {
+     
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+
+   
   }
   return user;
 };

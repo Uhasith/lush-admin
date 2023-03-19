@@ -87,7 +87,7 @@ function WatchListRow() {
               }}
             >
               <Typography variant="h2" sx={{ pr: 1, mb: 1 }}>
-                $56,475.99
+                €56,475.99
               </Typography>
               <Text color="success">
                 <b>+12.5%</b>
@@ -132,7 +132,7 @@ function WatchListRow() {
               }}
             >
               <Typography variant="h2" sx={{ pr: 1, mb: 1 }}>
-                $1,968.00
+                €1,968.00
               </Typography>
               <Text color="error">
                 <b>-3.24%</b>
@@ -177,7 +177,7 @@ function WatchListRow() {
               }}
             >
               <Typography variant="h2" sx={{ pr: 1, mb: 1 }}>
-                $23.00
+                €23.00
               </Typography>
               <Text color="error">
                 <b>-0.33%</b>

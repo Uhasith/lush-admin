@@ -13,7 +13,7 @@ import {
   useTheme,
   Typography,
   Tooltip,
-  IconButton,
+  IconButton,  
   Chip,
   Avatar
 } from '@mui/material';
@@ -237,7 +237,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       noWrap
                       sx={{ textTransform: 'capitalize' }}
                     >
-                      {`$ ${product?.price} per ${product?.unitType}` || '-'}
+                      {`€ ${product?.price} per ${product?.unitType}` || '-'}
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
