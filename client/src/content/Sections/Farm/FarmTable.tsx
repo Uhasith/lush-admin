@@ -89,7 +89,7 @@ const FarmTable: FC<FarmTableProps> = ({ categories }) => {
             <TableRow>
               <TableCell align="center">Created Date</TableCell>
               <TableCell align="center">Farmer's Market ID</TableCell>
-              <TableCell align="center">Farmer's Market Name</TableCell>
+              <TableCell align="center">Farmer's Market</TableCell>
               <TableCell align="center">Address</TableCell>
               <TableCell align="center">Postal Code</TableCell>
               <TableCell align="center">Start/End Time</TableCell>

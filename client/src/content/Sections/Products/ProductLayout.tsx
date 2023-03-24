@@ -107,7 +107,7 @@ function ProductLayout() {
       );
       setList(newList);
     }
-  }, [userRole]);
+  }, [userRole,productList]);
   const onReportSearch = ({
     name,
     status,

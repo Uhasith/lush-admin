@@ -182,7 +182,7 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
               <TableCell align="center">E-mail</TableCell>
               <TableCell align="center">Phone Number</TableCell>
               <TableCell align="center">Address</TableCell>
-              <TableCell align="center">Worker Type</TableCell>
+              <TableCell align="center">Farmer's Market Name</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
@@ -258,7 +258,7 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
                       gutterBottom
                       noWrap
                     >
-                      {worker.email}
+                      {worker?.email}
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
@@ -282,13 +282,12 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
                     </Typography>
                   </TableCell>
 
-                  <TableCell align="center">{worker.userType}</TableCell>
+                  <TableCell align="center">{worker?.farm?.name ? worker?.farm?.name : "-"}</TableCell>
                   <TableCell align="center">
-                    {getStatusLabel(worker.status)}
+                    {getStatusLabel(worker?.status)}
                   </TableCell>
-
                   <TableCell align="center">
-                    {worker.status == 'Active' ? (
+                    {worker?.status == 'Active' ? (
                       <Tooltip title="Deactivate" arrow>
                         {loading ? (
                           <CircularProgress size={20} color="error" />

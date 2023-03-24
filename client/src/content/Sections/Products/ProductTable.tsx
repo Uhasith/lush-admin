@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState } from 'react';
+import { FC, ChangeEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import leadingZeroes from 'leading-zeroes';
 import {
@@ -60,6 +60,17 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
   
   const theme = useTheme();
 
+  useEffect(() => {
+    const savedPage = localStorage.getItem('page');
+    if (savedPage) {
+      setPage(parseInt(savedPage));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.removeItem('page');
+  }, []);
+
   const applyPagination = (
     _products: any,
     page: number,
@@ -70,6 +81,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
 
   const handlePageChange = (event: any, newPage: number): void => {
     setPage(newPage);
+    localStorage.setItem('page', newPage.toString());
   };
 
   const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -118,7 +130,6 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
       data: Object.assign({ hasPromotion: !hasPromotion }) 
     }));
   };
-
 
   
 

@@ -62,6 +62,8 @@ const CardHeaderComponent = styled(CardHeader)(
 
 function ReportLayout() {
   const dispatch = useDispatch();
+  const currentUser = useSelector(({ auth }: any) => auth.user);
+
   const theme = useTheme();
   const [filters, setFilters] = useState<Filters>({
     status: 'All',
@@ -73,6 +75,8 @@ function ReportLayout() {
   );
   const loading = useSelector(({ common }: RootStateOrAny) => common.loading);
 
+  const [list, setList] = useState([]);
+
   useEffect(() => {
     dispatch(
       fetchAllCategories({
@@ -81,6 +85,18 @@ function ReportLayout() {
       })
     );
   }, []);
+
+  
+  const userRole = currentUser?.role;
+
+  useEffect(() => {
+    if (userRole === 'Worker') {
+      const newList = categoryList?.filter(
+        (category) => category?.createdBy === currentUser?._id
+      );
+      setList(newList);
+    }
+  }, [userRole,categoryList]);
 
   const onReportSearch = ({
     status,
@@ -202,7 +218,7 @@ function ReportLayout() {
           <Divider />
 
           {categoryList?.length > 0 ? (
-            <CategoryTable categories={categoryList} />
+            <CategoryTable categories={userRole === 'Worker' ? list : categoryList} />
           ) : (
             <Box
               sx={{
