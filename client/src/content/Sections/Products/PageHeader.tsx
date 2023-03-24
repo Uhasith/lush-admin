@@ -97,26 +97,58 @@ export default function PageHeader() {
   };
 
   return (
-    <Grid container justifyContent="space-between" alignItems="center">
-      <Grid item>
+
+
+    <div>
+
+
+
+
+
+    <Grid container justifyContent="space-between" alignItems="center"  rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid item xs={8}>
         <Typography variant="h3" component="h3" gutterBottom>
           Product Management
         </Typography>
         <Typography variant="subtitle2">All product details</Typography>
       </Grid>
-      <Grid item>
-        {uploadedFile ? (
+
+    
+
+      <Grid item xs={4}>
+
+      <Grid container spacing={1}>
+  <Grid item>
+    
+
+  {uploadedFile ? (
           <>
-            <Button color="primary" sx={{ mt: { xs: 2, md: 0 }, mr: { xs: 2, md: 3 } }} variant="contained" onClick={handleFileSubmit}>
+            <Button
+              color="primary"
+              sx={{ mt: { xs: 2, md: 0 }, mr: { xs: 2, md: 3 } }}
+              variant="contained"
+              onClick={handleFileSubmit}
+            >
               Submit File
             </Button>
-            <Button color="secondary" variant="contained" onClick={handleRemoveFile}>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={handleRemoveFile}
+            >
               Remove File
             </Button>
           </>
         ) : (
           <>
-            <Button color="primary" sx={{ mt: { xs: 2, md: 0 } }} variant="contained" startIcon={<AddTwoToneIcon fontSize="small" />} onClick={handleFileSelect}>
+            <Button
+              color="primary"
+              sx={{ mt: { xs: 2, md: 0 } }}
+              variant="contained"
+              startIcon={<AddTwoToneIcon fontSize="small" />}
+              onClick={handleFileSelect}
+              
+            >
               Import Products
             </Button>
             {error && (
@@ -135,17 +167,32 @@ export default function PageHeader() {
           inputRef={fileInputRef}
           style={{ display: 'none' }}
         />
-      </Grid>
-      <Grid item>
-        <Button
+
+
+  </Grid>
+  <Grid item xs>
+   <Button
           sx={{ mt: { xs: 2, md: 0 }, color: '#000' }}
           variant="contained"
           startIcon={<AddTwoToneIcon fontSize="small" />}
           onClick={() => setModalOpen(true)}
         >
           Add New Product
-        </Button>
+        </Button>  </Grid>
+
+
+</Grid>
+
+
+
+    
       </Grid>
+
+
+
+
+
+    
       <Modal
         isOpen={modalOpen}
         handleClose={handleModalClose}
@@ -153,5 +200,7 @@ export default function PageHeader() {
         modalHeader={'Add New Product'}
       />
     </Grid>
+    </div>
+
   );
 }
