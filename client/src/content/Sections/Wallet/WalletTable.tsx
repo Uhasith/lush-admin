@@ -36,10 +36,11 @@ const TableComponent = styled(Table)(
 `
 );
 
-const theme = useTheme();
 
 const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
   const dispatch = useDispatch();
+
+  const theme = useTheme();
 
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
