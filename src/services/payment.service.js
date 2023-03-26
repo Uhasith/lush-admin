@@ -41,7 +41,25 @@ const queryPayments = async (filter, options) => {
   return payments;
 };
 
+const getPaymentByOrderId = async (orderId) => {
+  const payments = await Payment.find({ order: orderId });
+  if (!payment) {
+    throw new Error('Order not found');
+  }
+  return payments[0];
+};
+
+const refundPayment = async (orderId) => {
+  const foundPayment = await getPaymentByOrderId(orderId);
+  await stripe.refunds.create({
+    payment_intent: foundPayment.paymentIntentId,
+  });
+
+  logger.info(`✓ Payment refund successful...`);
+};
+
 module.exports = {
   queryPayments,
   createPayment,
+  refundPayment,
 };
