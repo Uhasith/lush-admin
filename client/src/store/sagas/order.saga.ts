@@ -4,6 +4,7 @@ import {
   START_LOADING,
   END_LOADING,
   SET_ERROR_MESSAGE,
+  SET_UPDATED_ORDER,
   SET_SUCCESS_MESSAGE,
   FETCH_ALL_ORDERS,
   SET_ALL_ORDERS,
@@ -86,7 +87,7 @@ export function* updateOrder({
     if (response.data) {
       const message = 'Order successfully updated';
       yield put({ type: SET_SUCCESS_MESSAGE, payload: message });
-      yield put({ type: FETCH_ALL_ORDERS });
+      yield put({ type: SET_UPDATED_ORDER, payload: response.data });
     }
 
     yield put({ type: END_LOADING });
