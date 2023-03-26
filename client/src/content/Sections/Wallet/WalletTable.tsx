@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState } from 'react';
+import { FC, ChangeEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Box,
@@ -11,19 +11,18 @@ import {
   TableRow,
   useTheme,
   Typography,
-  Chip
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import moment from 'moment';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import { updateOrder } from '../../../store/actions/order.action';
-
 import Label from 'src/components/Label';
+import Select from 'react-select';
+import { updateOrder } from 'src/store/actions/order.action';
 
-import Stack from '@mui/material/Stack';
+
+
 interface ProductTableProps {
   products?: any[];
+  orderList?: any[];
 }
 
 const TableComponent = styled(Table)(
@@ -34,68 +33,84 @@ const TableComponent = styled(Table)(
 `
 );
 
-const ProductTable: FC<ProductTableProps> = ({ products }) => {
+const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
 
   const theme = useTheme();
 
+  useEffect(() => {
+    const savedPage = localStorage.getItem('page');
+    if (savedPage) {
+      setPage(parseInt(savedPage));
+    }
+  }, []);
+
+
+  useEffect(() => {
+    localStorage.removeItem('page');
+  }, []);
+
   const applyPagination = (
-    _products: any,
+    _orderList: any,
     page: number,
     limit: number
   ): any => {
-    return _products.slice(page * limit, page * limit + limit);
+    return _orderList.slice(page * limit, page * limit + limit);
   };
 
   const handlePageChange = (event: any, newPage: number): void => {
     setPage(newPage);
+    localStorage.setItem('page', newPage.toString());
   };
 
   const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setLimit(parseInt(event.target.value));
   };
 
-  const filteredReports = products;
+
+  const filteredReports = orderList;
 
   const paginatedReports = applyPagination(filteredReports, page, limit);
 
+  const options = [
+    { value: 'Pending', label: 'Pending' },
+    { value: 'Dispatched', label: 'Dispatched' },
+    { value: 'Cancelled', label: 'Cancelled' }
+  ]
+
+  const handleDropdown = (id,status) => {
+
+    dispatch(updateOrder({  
+      id:id,
+      data: Object.assign({ status: status }) 
+    }));
+  };
+
   const getProductStatusLabel = (status: string): JSX.Element => {
     const map = {
-      Active: {
-        text: 'Completed',
+      Dispatched: {
+        text: 'Dispatched',
         color: 'success'
       },
       Pending: {
         text: 'Pending',
         color: 'warning'
-      }
+      },
+      Cancelled: {
+        text: 'Cancelled',
+        color: 'error'
+      },
     };
-
-    const { text, color }: any = map[status];
-
-    return <Label color={color}>{text}</Label>;
-  };
-
-  const handleToggle = (id, status) => {
-    let newStatus;
-    if (status !== 'Dispatched') {
-      newStatus = 'Dispatched';
+  
+    if (map.hasOwnProperty(status)) {
+      const { text, color }: any = map[status];
+      return <Label color={color}>{text}</Label>;
     } else {
-      newStatus = 'Pending';
+      return <Label color="error">Invalid Status</Label>;
     }
-
-    dispatch(
-      updateOrder({
-        id: id,
-        data: { status: newStatus }
-      })
-    );
   };
 
   return (
@@ -108,16 +123,15 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
               <TableCell align="center">Customer Name</TableCell>
               <TableCell align="center">Ordered Date</TableCell>
               <TableCell align="center">Delivery Date</TableCell>
-              <TableCell align="center">Product</TableCell>
               <TableCell align="center">Change Delivery Status</TableCell>
-              <TableCell align="center">Delivery Status</TableCell>
+              <TableCell align="center">Status</TableCell>
               <TableCell align="center">Total</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedReports.map((product: any) => {
+            {paginatedReports.map((order: any) => {
               return (
-                <TableRow hover key={product.id}>
+                <TableRow hover key={order.id}>
                   <TableCell align="center">
                     <Typography
                       variant="body1"
@@ -126,7 +140,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      XLR {product?.oderId}
+                      XLR {order?.oderId}
                     </Typography>
                   </TableCell>
 
@@ -138,7 +152,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      {product?.buyerFirstName}
+                       {`${order?.buyer?.firstName} ${order?.buyer?.lastName}`}
                     </Typography>
                   </TableCell>
 
@@ -160,7 +174,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                           noWrap
                           align="left"
                         >
-                          {moment(product?.createdAt).format('YYYY-MM-DD') ||
+                          {moment(order?.createdAt).format('YYYY-MM-DD') ||
                             '-'}
                         </Typography>
                       </Box>
@@ -175,45 +189,30 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      {moment(product?.createdAt).format('YYYY-MM-DD') || '-'}
+                      {moment(order?.createdAt).format('YYYY-MM-DD') || '-'}
                     </Typography>
                   </TableCell>
 
                   <TableCell align="center">
+                  <Select
+                    options={options}
+                    value={options.find(option => option.value === order.status)} // Set the default value
+                    onChange={(selectedOption) => handleDropdown(order.id,selectedOption.value)}
+                  />
+                </TableCell>
+
+                <TableCell align="center">
                     <Typography
                       variant="body1"
                       fontWeight="bold"
                       color="text.primary"
                       gutterBottom
                       noWrap
-                      sx={{ textTransform: 'capitalize' }}
                     >
-                      <Stack direction="row" spacing={1}>
-                        <Chip
-                          label={`${product?.productName} × ${product?.productQty}`}
-                        />
-                      </Stack>
+                      {getProductStatusLabel(order?.status)}
                     </Typography>
                   </TableCell>
 
-                  <TableCell align="center">
-                    <FormControlLabel
-                      value="start"
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={
-                            product?.status == 'Dispatched' ? true : false
-                          }
-                          onChange={() =>
-                            handleToggle(product.oderId, product.status)
-                          }
-                        />
-                      }
-                      label=""
-                      labelPlacement="start"
-                    />
-                  </TableCell>
 
                   <TableCell align="center">
                     <Typography
@@ -223,19 +222,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                       gutterBottom
                       noWrap
                     >
-                      {getProductStatusLabel(product?.status)}
-                    </Typography>
-                  </TableCell>
-
-                  <TableCell align="center">
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
-                      gutterBottom
-                      noWrap
-                    >
-                      {product?.price}$
+                      {order?.totalPrice}$
                     </Typography>
                   </TableCell>
                 </TableRow>
