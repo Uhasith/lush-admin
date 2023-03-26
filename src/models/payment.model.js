@@ -3,26 +3,29 @@ const { toJSON, paginate } = require('./plugins');
 
 const paymentSchema = mongoose.Schema(
   {
-    invoiceId: {
-      type: String,
-      required: true,
-    },
-    worker: {
+    order: {
       type: mongoose.SchemaTypes.ObjectId,
       required: true,
-      ref: 'User',
+      ref: 'Order',
     },
-    paySlipKey: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    totalPayment: {
+    amount: {
       type: String,
       required: true,
     },
-    isSend: {
-      type: Boolean,
+    paymentIntentId: {
+      type: String,
+      required: true,
+    },
+    chargeId: {
+      type: String,
+      default: false,
+    },
+    curency: {
+      type: String,
+      default: false,
+    },
+    status: {
+      type: String,
       default: false,
     },
   },
@@ -41,6 +44,3 @@ paymentSchema.plugin(paginate);
 const Payment = mongoose.model('Payment', paymentSchema);
 
 module.exports = Payment;
-
-// POST request to create the time log record with required fields
-// PATCH request to update the created record by providing the previously created recordId and other remaining fields

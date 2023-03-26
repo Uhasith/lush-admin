@@ -3,12 +3,15 @@
 const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const catchAsync = require('../utils/catchAsync');
-const { orderService } = require('../services');
+const { orderService, paymentService } = require('../services');
 const ApiError = require('../utils/ApiError');
 
 const createOrder = catchAsync(async (req, res) => {
-  const order = await orderService.createOrder(req.body);
-  res.status(httpStatus.CREATED).send(order);
+  const { orderData, paymentData } = req.body;
+  const order = await orderService.createOrder(orderData);
+  const payment = await paymentService.createPayment({ ...paymentData, ...{ order: order._id } });
+
+  res.status(httpStatus.CREATED).send({ order, payment });
 });
 
 const getOrders = catchAsync(async (req, res) => {
@@ -28,6 +31,7 @@ const getOrder = catchAsync(async (req, res) => {
 
 const updateOrder = catchAsync(async (req, res) => {
   const order = await orderService.updateOrderById(req.params.orderId, req.body);
+
   res.send(order);
 });
 
