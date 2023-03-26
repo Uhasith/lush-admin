@@ -36,6 +36,8 @@ const TableComponent = styled(Table)(
 `
 );
 
+const theme = useTheme();
+
 const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
   const dispatch = useDispatch();
 
@@ -43,8 +45,6 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
   const [limit, setLimit] = useState<number>(5);
   const [selectedOrderProducts, setSelectedOrderProducts] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const theme = useTheme();
 
   useEffect(() => {
     const savedPage = localStorage.getItem('page');
@@ -208,10 +208,11 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
 
                   <TableCell align="center">
                     <Select
+                      isDisabled={order.status === 'Cancelled'}
                       options={options}
                       value={options.find(
                         (option) => option.value === order.status
-                      )} // Set the default value
+                      )}
                       onChange={(selectedOption) =>
                         handleDropdown(order.id, selectedOption.value)
                       }

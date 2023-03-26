@@ -30,6 +30,9 @@ const getOrder = catchAsync(async (req, res) => {
 });
 
 const updateOrder = catchAsync(async (req, res) => {
+  if (req.body.status === 'Cancelled') {
+    await paymentService.refundPayment(req.params.orderId);
+  }
   const order = await orderService.updateOrderById(req.params.orderId, req.body);
 
   res.send(order);
