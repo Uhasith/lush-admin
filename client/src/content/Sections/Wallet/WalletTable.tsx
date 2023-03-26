@@ -9,7 +9,6 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  useTheme,
   Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -36,8 +35,6 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
 
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
-
-  const theme = useTheme();
 
   useEffect(() => {
     const savedPage = localStorage.getItem('page');
@@ -191,10 +188,11 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
 
                   <TableCell align="center">
                     <Select
+                      isDisabled={order.status === 'Cancelled'}
                       options={options}
                       value={options.find(
                         (option) => option.value === order.status
-                      )} // Set the default value
+                      )}
                       onChange={(selectedOption) =>
                         handleDropdown(order.id, selectedOption.value)
                       }
