@@ -98,6 +98,7 @@ export const DELETE_FARM = 'DELETE_FARM';
 // order actions
 export const FETCH_ALL_ORDERS = 'FETCH_ALL_ORDERS';
 export const SET_ALL_ORDERS = 'SET_ALL_ORDERS';
+export const SET_UPDATED_ORDER = 'SET_UPDATED_ORDER';
 export const UPDATE_ORDER = 'UPDATE_ORDER';
 export const ADD_ORDER = 'ADD_ORDER';
 
