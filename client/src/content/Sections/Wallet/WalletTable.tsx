@@ -9,9 +9,15 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  useTheme,
+  Typography,
+  Tooltip,
+  IconButton,
+  Button
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Modal } from 'antd';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import moment from 'moment';
 import Label from 'src/components/Label';
 import Select from 'react-select';
@@ -30,11 +36,15 @@ const TableComponent = styled(Table)(
 `
 );
 
+const theme = useTheme();
+
 const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
+  const [selectedOrderProducts, setSelectedOrderProducts] = useState<any[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const savedPage = localStorage.getItem('page');
@@ -62,6 +72,11 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
 
   const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setLimit(parseInt(event.target.value));
+  };
+
+  const handleViewOrder = (id: string, products: any[]) => {
+    setSelectedOrderProducts(products);
+    setIsModalOpen(true);
   };
 
   const filteredReports = orderList;
@@ -107,6 +122,10 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
     }
   };
 
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <TableContainer>
@@ -120,6 +139,7 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
               <TableCell align="center">Change Delivery Status</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Total</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -222,23 +242,115 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
                       {order?.totalPrice}€
                     </Typography>
                   </TableCell>
+
+                  <TableCell align="center">
+                    <Tooltip title="View" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': {
+                            background: theme.colors.primary.lighter
+                          }
+                        }}
+                        color="success"
+                        size="medium"
+                        onClick={() =>
+                          handleViewOrder(order?.id, order?.products)
+                        }
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               );
             })}
           </TableBody>
         </TableComponent>
       </TableContainer>
-      <Box p={2}>
-        <TablePagination
-          component="div"
-          count={filteredReports.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25, 30]}
-        />
-      </Box>
+      <TablePagination
+        component="div"
+        count={filteredReports.length}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleLimitChange}
+        page={page}
+        rowsPerPage={limit}
+        rowsPerPageOptions={[5, 10, 25, 30]}
+      />
+      <Modal
+        visible={isModalOpen}
+        onCancel={handleModalClose}
+        title="Product Details Contain in the Order"
+        width={800}
+        style={{ height: 600 }}
+        footer={[
+          <Button key="close" onClick={handleModalClose}>
+            Close
+          </Button>
+        ]}
+      >
+        <TableContainer>
+          <TableComponent>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Product ID</TableCell>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Quantity</TableCell>
+                <TableCell align="center">Price</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {selectedOrderProducts.map((p) => (
+                <TableRow hover key={p.id}>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {p?.product?.id}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {p?.product?.name}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {p?.qty}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {p?.product?.price}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </TableComponent>
+        </TableContainer>
+      </Modal>
     </>
   );
 };

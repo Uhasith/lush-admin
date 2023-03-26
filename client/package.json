@@ -24,6 +24,7 @@
     "@typescript-eslint/eslint-plugin": "5.0.0",
     "@typescript-eslint/parser": "5.0.0",
     "@wojtekmaj/react-daterange-picker": "^3.4.0",
+    "antd": "^5.3.2",
     "axios": "^0.24.0",
     "babel-eslint": "^10.1.0",
     "chart.js": "2.9.4",
