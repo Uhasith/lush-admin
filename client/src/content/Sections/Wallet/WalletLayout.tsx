@@ -207,7 +207,7 @@ function OrderLayout() {
           <Divider />
 
           {orderItems?.length > 0 ? (
-            <WalletTable products={orderItems} />
+            <WalletTable orderList={orderList} />
           ) : (
             <Box
               sx={{

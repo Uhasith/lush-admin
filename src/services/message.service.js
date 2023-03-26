@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 const mongoose = require('mongoose');
 const _ = require('lodash');
 
