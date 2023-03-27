@@ -155,7 +155,7 @@ const ProductTable: FC<ProductTableProps> = ({ orderList }) => {
                       gutterBottom
                       noWrap
                     >
-                      XLR {order?.oderId}
+                      XLR {order?.orderId}
                     </Typography>
                   </TableCell>
 
