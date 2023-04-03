@@ -86,7 +86,6 @@ function ReportLayout() {
     );
   }, []);
 
-  
   const userRole = currentUser?.role;
 
   useEffect(() => {
@@ -96,7 +95,7 @@ function ReportLayout() {
       );
       setList(newList);
     }
-  }, [userRole,categoryList]);
+  }, [userRole, categoryList]);
 
   const onReportSearch = ({
     status,
@@ -218,7 +217,9 @@ function ReportLayout() {
           <Divider />
 
           {categoryList?.length > 0 ? (
-            <CategoryTable categories={userRole === 'Worker' ? list : categoryList} />
+            <CategoryTable
+              categories={userRole === 'Worker' ? list : categoryList}
+            />
           ) : (
             <Box
               sx={{

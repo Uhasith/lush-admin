@@ -42,6 +42,12 @@ const getCategoryById = async (id) => {
  */
 const updateCategoryById = async (categoryId, updateBody) => {
   const category = await getCategoryById(categoryId);
+
+  // added this to have the sub categories remove functionality
+  if (!updateBody.subCategories) {
+    updateBody.subCategories = [];
+  }
+
   if (!category) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Category not found');
   }

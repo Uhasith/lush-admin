@@ -32,12 +32,15 @@ const CreateCategoryForm = ({
     name: formData?.name || '',
     status: formData?.status || 'Active',
     description: formData?.description || '',
-    subCategories: formData?.subCategories || [
-      {
-        name: '',
-        description: ''
-      }
-    ]
+    subCategories:
+      formData?.subCategories?.length > 0
+        ? formData?.subCategories
+        : [
+            {
+              name: '',
+              description: ''
+            }
+          ]
   };
 
   const categoryAddSchema = Yup.object({
@@ -56,8 +59,10 @@ const CreateCategoryForm = ({
 
     if (formData) {
       dispatch(updateCategory({ id: formData.id, data: paload }));
+      window.location.reload();
     } else {
-      dispatch(createCategory({...paload, createdBy: currentUser?._id}));
+      dispatch(createCategory({ ...paload, createdBy: currentUser?._id }));
+      window.location.reload();
     }
     onSuccess();
   };
@@ -101,7 +106,7 @@ const CreateCategoryForm = ({
                         </Typography>
                         <IconButton
                           onClick={() => {
-                            values.subCategories.length > 1 &&
+                            values.subCategories.length > 0 &&
                               helpers.remove(index);
                           }}
                           size="small"

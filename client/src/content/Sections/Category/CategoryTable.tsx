@@ -95,6 +95,7 @@ const ReportTable: FC<ReportTableProps> = ({ categories }) => {
 
   const handleDeleteCategory = (id: string) => {
     dispatch(deleteCategory(id));
+    window.location.reload();
   };
 
   const handleEditCategory = (category: string) => {
@@ -153,7 +154,7 @@ const ReportTable: FC<ReportTableProps> = ({ categories }) => {
                       gutterBottom
                       noWrap
                     >
-                       {category?.id || '-'}
+                      {category?.id || '-'}
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
