@@ -22,7 +22,10 @@ import moment from 'moment';
 import _ from 'lodash';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { deleteProduct, updateProduct } from '../../../store/actions/product.action';
+import {
+  deleteProduct,
+  updateProduct
+} from '../../../store/actions/product.action';
 import Label from 'src/components/Label';
 import Modal from 'src/components/Modal';
 import CreateProductForm from './CreateProductForm';
@@ -49,7 +52,6 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
   const [limit, setLimit] = useState<number>(5);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isChecked, setIsChecked] = useState(false);
 
   const theme = useTheme();
 
@@ -109,6 +111,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
 
   const handleDeleteProduct = (id: string) => {
     dispatch(deleteProduct(id));
+    window.location.reload();
   };
 
   const handleEditProduct = (product: any) => {
@@ -116,15 +119,15 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
     setIsOpen(true);
   };
 
-  const handleToggle = (id,hasPromotion) => {
-
-    dispatch(updateProduct({  
-      id: id,
-      data: Object.assign({ hasPromotion: !hasPromotion }) 
-    }));
+  const handleToggle = (id, hasPromotion) => {
+    dispatch(
+      updateProduct({
+        id: id,
+        data: Object.assign({ hasPromotion: !hasPromotion })
+      })
+    );
+    window.location.reload();
   };
-
-  
 
   return (
     <>
@@ -290,15 +293,20 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
                   <TableCell align="center">
                     <FormControlLabel
                       value="start"
-                      control={<Switch  
-                        color="primary"
-                        checked={product.hasPromotion}
-                        onChange={() => handleToggle(product.id,product.hasPromotion)} />}
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={product.hasPromotion}
+                          onChange={() =>
+                            handleToggle(product.id, product.hasPromotion)
+                          }
+                        />
+                      }
                       label=""
                       labelPlacement="start"
                     />
                   </TableCell>
-            
+
                   <TableCell align="center">
                     <Typography
                       variant="body1"

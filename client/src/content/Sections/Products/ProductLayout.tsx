@@ -17,7 +17,7 @@ import {
   useTheme
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import CachedIcon from '@mui/icons-material/Cached';
+
 import ProductTable from './ProductTable';
 import { fetchAllProducts } from '../../../store/actions/product.action';
 import { DATE_FORMAT } from 'src/constants/common-configurations';
@@ -107,7 +107,8 @@ function ProductLayout() {
       );
       setList(newList);
     }
-  }, [userRole,productList]);
+  }, [userRole, productList]);
+
   const onReportSearch = ({
     name,
     status,
