@@ -129,7 +129,11 @@ const HeaderUserbox = () => {
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component="nav">
-          <ListItem button to="/app/profile" component={NavLink}>
+          <ListItem
+            button
+            to={`/app/workers/${currentUser?._id}`}
+            component={NavLink}
+          >
             <AccountBoxTwoToneIcon fontSize="small" />
             <ListItemText primary="My Profile" />
           </ListItem>

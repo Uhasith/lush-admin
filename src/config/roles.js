@@ -1,5 +1,5 @@
 const allRoles = {
-  Worker: ['viewCategory', 'manageMessages', 'manageProducts'],
+  Worker: ['viewCategory', 'manageMessages', 'manageProducts', 'manageUsers'],
   Admin: [
     'getUsers',
     'manageUsers',
