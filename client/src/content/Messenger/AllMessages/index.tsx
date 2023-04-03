@@ -39,6 +39,7 @@ const AllMessages = ({ onChatClick, keyword }) => {
   const allMessages = useSelector(({ msg }: RootStateOrAny) => msg.list);
   const loading = useSelector(({ common }: RootStateOrAny) => common.loading);
   const user = useSelector(({ auth }: RootStateOrAny) => auth.user);
+
   const [msgs, setMsgs] = useState([]);
   useEffect(() => {
     dispatch(fetchMessages());
@@ -85,7 +86,13 @@ const AllMessages = ({ onChatClick, keyword }) => {
                     onClick={() => onChatClick(worker)}
                   >
                     <ListItemAvatar>
-                      <Avatar {...stringAvatar(worker?.name)} />
+                      <Avatar
+                        {...stringAvatar(
+                          user?.role === 'Admin'
+                            ? worker?.name
+                            : 'Admin Support'
+                        )}
+                      />
                     </ListItemAvatar>
                     <ListItemText
                       sx={{ mr: 1 }}
@@ -98,7 +105,9 @@ const AllMessages = ({ onChatClick, keyword }) => {
                         color: 'textSecondary',
                         noWrap: true
                       }}
-                      primary={worker.name}
+                      primary={
+                        user?.role === 'Admin' ? worker.name : 'Admin/Support'
+                      }
                       secondary={messages[0]?.description}
                     />
                     {unreadMessageCount(messages) && (

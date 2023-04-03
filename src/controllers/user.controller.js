@@ -68,10 +68,10 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
+  const prevUser = await userService.getUserById(req.params.userId);
   const user = await userService.updateUserById(req.params.userId, req.body);
 
-  // send the thread starting message if the user becomes an active user of the system
-  if (req?.body?.status == userStatus.ACTIVE) {
+  if (prevUser?.status == userStatus.REVIEWING && req?.body?.status == userStatus.ACTIVE) {
     const msgData = {
       to: user?._id,
       from: req?.user?._id,
@@ -81,6 +81,7 @@ const updateUser = catchAsync(async (req, res) => {
 
     await Message.create(msgData);
   }
+
   res.send(user);
 });
 
