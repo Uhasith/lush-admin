@@ -107,16 +107,31 @@ export default function PageHeader() {
       <Grid item>
         {uploadedFile ? (
           <>
-            <Button color="primary" sx={{ mt: { xs: 2, md: 0 }, mr: { xs: 2, md: 3 } }} variant="contained" onClick={handleFileSubmit}>
+            <Button
+              color="primary"
+              sx={{ mt: { xs: 2, md: 0 }, mr: { xs: 2, md: 3 } }}
+              variant="contained"
+              onClick={handleFileSubmit}
+            >
               Submit File
             </Button>
-            <Button color="secondary" variant="contained" onClick={handleRemoveFile}>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={handleRemoveFile}
+            >
               Remove File
             </Button>
           </>
         ) : (
           <>
-            <Button color="primary" sx={{ mt: { xs: 2, md: 0 } }} variant="contained" startIcon={<AddTwoToneIcon fontSize="small" />} onClick={handleFileSelect}>
+            <Button
+              color="primary"
+              sx={{ mt: { xs: 2, md: 0 } }}
+              variant="contained"
+              startIcon={<AddTwoToneIcon fontSize="small" />}
+              onClick={handleFileSelect}
+            >
               Import Products
             </Button>
             {error && (
