@@ -68,31 +68,7 @@ function WorkerLayout() {
                   columnGap: '20px'
                 }}
               >
-                <TextField
-                  fullWidth
-                  label="Search user"
-                  margin="normal"
-                  name="emergencyContact"
-                  onChange={handleUserChange}
-                  type="text"
-                  value={userText}
-                  variant="outlined"
-                />
-
-                <IconButton
-                  sx={{
-                    '&:hover': {
-                      background: theme.colors.primary.lighter
-                    },
-                    color: '#5569FF',
-                    width: '30%'
-                  }}
-                  color="inherit"
-                  size="small"
-                  onClick={applyFilters}
-                >
-                  <SearchIcon />
-                </IconButton>
+             
               </Box>
             }
           />

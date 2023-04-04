@@ -11,6 +11,8 @@ import {
   TableRow,
   useTheme,
   Typography,
+  TextField,
+  Button,
   Tooltip,
   IconButton
 } from '@mui/material';
@@ -23,6 +25,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { deleteFarm } from '../../../store/actions/farm.action';
 import CreateCategoryForm from './CreateFarmForm';
+import '../../../assets/css/index.css';
 
 interface FarmTableProps {
   categories?: any[];
@@ -81,8 +84,54 @@ const FarmTable: FC<FarmTableProps> = ({ categories }) => {
     setIsOpen(true);
   };
 
+  {
+    /* /////////////////add-search-bar////////////////////// */
+  }
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredRowsnew, setfilteredRowsnew] = useState(paginatedReports);
+
+  const filteredRows = paginatedReports.filter((farm: any) => {
+    return (
+      farm.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      farm.address.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
+  const handleCancelSearch = () => {
+    setSearchQuery('');
+    setfilteredRowsnew(paginatedReports);
+  };
+  {
+    /* /////////////////add-search-bar////////////////////// */
+  }
+
   return (
     <>
+      {/* /////////////////add-search-bar////////////////////// */}
+
+      <div className="searchbar">
+        <TextField
+          label="Search"
+          variant="standard"
+          placeholder="Search here..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      {searchQuery && (
+        <Button
+          className="searchbar-btn"
+          variant="outlined"
+          onClick={handleCancelSearch}
+        >
+          Cancel
+        </Button>
+      )}
+
+      {/* /////////////////add-search-bar////////////////////// */}
+
       <TableContainer>
         <TableComponent>
           <TableHead>
@@ -99,7 +148,7 @@ const FarmTable: FC<FarmTableProps> = ({ categories }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedReports.map((farm: any) => {
+            {filteredRows.map((farm: any) => {
               return (
                 <TableRow hover key={farm.id}>
                   <TableCell align="center">
@@ -245,6 +294,7 @@ const FarmTable: FC<FarmTableProps> = ({ categories }) => {
           </TableBody>
         </TableComponent>
       </TableContainer>
+
       <Box p={2}>
         <TablePagination
           component="div"

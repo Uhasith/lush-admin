@@ -321,9 +321,7 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ applicants }) => {
         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco
+          Did you review application and are you sure this applicant need to add as a new farmer to the system.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -342,9 +340,7 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ applicants }) => {
         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco
+          Did you review application and are you sure about rejecting this applicant.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

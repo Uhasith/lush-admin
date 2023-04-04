@@ -12,6 +12,8 @@ import {
   TableRow,
   useTheme,
   Typography,
+  TextField,
+  Button,
   Tooltip,
   IconButton,
   Chip,
@@ -32,6 +34,7 @@ import CreateProductForm from './CreateProductForm';
 import { BASE_URL } from 'src/constants/common-configurations';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import '../../../assets/css/index.css';
 
 interface ProductTableProps {
   products?: any[];
@@ -52,6 +55,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
   const [limit, setLimit] = useState<number>(5);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
 
   const theme = useTheme();
 
@@ -111,7 +115,6 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
 
   const handleDeleteProduct = (id: string) => {
     dispatch(deleteProduct(id));
-    window.location.reload();
   };
 
   const handleEditProduct = (product: any) => {
@@ -126,11 +129,42 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
         data: Object.assign({ hasPromotion: !hasPromotion })
       })
     );
-    window.location.reload();
+  };
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredRowsnew, setfilteredRowsnew] = useState(paginatedReports);
+
+  const filteredRows = paginatedReports.filter((product: any) => {
+    return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  const handleCancelSearch = () => {
+    setSearchQuery('');
+    setfilteredRowsnew(paginatedReports);
   };
 
   return (
     <>
+      <div className="searchbar">
+        <TextField
+          label="Search"
+          variant="standard"
+          placeholder="Search here..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      {searchQuery && (
+        <Button
+          className="searchbar-btn"
+          variant="outlined"
+          onClick={handleCancelSearch}
+        >
+          Cancel
+        </Button>
+      )}
+
       <TableContainer>
         <TableComponent>
           <TableHead>
@@ -149,7 +183,7 @@ const ProductTable: FC<ProductTableProps> = ({ products }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedReports.map((product: any) => {
+            {filteredRows.map((product: any) => {
               return (
                 <TableRow hover key={product.id}>
                   <TableCell align="center">

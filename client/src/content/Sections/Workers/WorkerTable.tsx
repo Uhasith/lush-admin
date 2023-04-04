@@ -12,6 +12,7 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  TextField,
   useTheme,
   TableContainer,
   Button
@@ -21,7 +22,6 @@ import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -31,6 +31,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Label from 'src/components/Label';
 import { formatDate } from 'src/common/functions';
 import { updateWorker } from '../../../store/actions/worker.actions';
+import '../../../assets/css/index.css';
 
 interface NewApplicantTableProps {
   className?: string;
@@ -114,6 +115,8 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
     });
   };
 
+  //////////////////////////////////////////
+
   const applyPagination = (_workers: any, page: number, limit: number): any => {
     return _workers.slice(page * limit, page * limit + limit);
   };
@@ -170,8 +173,53 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
   //   } catch (err) {}
   // };
 
+  {
+    /* /////////////////add-search-bar////////////////////// */
+  }
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredRowsnew, setfilteredRowsnew] = useState(paginatedWorkers);
+
+  const filteredRows = paginatedWorkers.filter((worker: any) => {
+    return (
+      worker.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      worker.lastName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
+  const handleCancelSearch = () => {
+    setSearchQuery('');
+    setfilteredRowsnew(paginatedWorkers);
+  };
+  {
+    /* /////////////////add-search-bar////////////////////// */
+  }
+
   return (
     <>
+      {/* /////////////////add-search-bar////////////////////// */}
+
+      <div className="searchbar">
+        <TextField
+          label="Search"
+          variant="standard"
+          placeholder="Search here..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+
+      {searchQuery && (
+        <Button
+          className="searchbar-btn"
+          variant="outlined"
+          onClick={handleCancelSearch}
+        >
+          Cancel
+        </Button>
+      )}
+
+      {/* /////////////////add-search-bar////////////////////// */}
       <TableContainer>
         <Table>
           <TableHead>
@@ -188,7 +236,7 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedWorkers.map((worker: any) => {
+            {filteredRows.map((worker: any) => {
               const isWorkerSelected = selectedWorkers.includes(worker.id);
               return (
                 <TableRow hover key={worker.id} selected={isWorkerSelected}>
@@ -282,7 +330,9 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
                     </Typography>
                   </TableCell>
 
-                  <TableCell align="center">{worker?.farm?.name ? worker?.farm?.name : "-"}</TableCell>
+                  <TableCell align="center">
+                    {worker?.farm?.name ? worker?.farm?.name : '-'}
+                  </TableCell>
                   <TableCell align="center">
                     {getStatusLabel(worker?.status)}
                   </TableCell>
@@ -374,15 +424,13 @@ const NewApplicantTable: FC<NewApplicantTableProps> = ({ workers }) => {
         <DialogTitle id="alert-dialog-title">{'Are you sure?'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco
+            Are you sure about this farmer need to deactivate.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDeclineClose}>Cancel</Button>
           <Button onClick={handleDeclineApplicant} autoFocus>
-            Decline
+            Accept
           </Button>
         </DialogActions>
       </Dialog>

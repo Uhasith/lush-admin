@@ -185,12 +185,12 @@ function ProductLayout() {
                   columnGap: '20px'
                 }}
               >
-                <FormControl sx={{ width: '180px' }} variant="outlined">
+                {/* <FormControl sx={{ width: '180px' }} variant="outlined">
                   <TextField
                     label="Product Search"
                     onChange={handleSearchInput}
                   />
-                </FormControl>
+                </FormControl> */}
 
                 <FormControl sx={{ width: '180px' }} variant="outlined">
                   <InputLabel> Product Status</InputLabel>
