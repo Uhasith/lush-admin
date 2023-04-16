@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 
 const { userStatus } = require('../config/users');
-const { Log, Job, User } = require('../models');
+const { Log, Order } = require('../models');
 const { isLocationVerified, calcWorkingHours } = require('../utils/functions');
 
 /**
@@ -41,10 +41,52 @@ const queryReports = async (filter, options) => {
  * @returns {Promise<QueryResult>}
  */
 const getDashboardData = async () => {
-  const workers = await User.countDocuments({ status: userStatus.ACTIVE, role: 'Worker' });
-  const newApplicants = await User.countDocuments({ status: userStatus.REVIEWING, role: 'Worker' });
+  const year = 2023;
+  const months = moment.months();
 
-  return { workers, newApplicants };
+  const tempReports = [];
+
+  for (const month of months) {
+    const startOfMonth = moment(`${year}-${month}-01`).startOf('month').format('YYYY-MM-DDTHH:mm:ssZ');
+    const endOfMonth = moment(`${year}-${month}-01`).endOf('month').format('YYYY-MM-DDTHH:mm:ssZ');
+
+    const allReports = await Order.find({
+      createdAt: {
+        $gte: startOfMonth,
+        $lt: endOfMonth,
+      },
+    });
+
+    tempReports.push(allReports?.length);
+  }
+
+  const data = {
+    labels: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    datasets: [
+      {
+        label: 'Monthly Sales',
+        data: tempReports,
+        fill: false,
+        borderColor: 'rgb(156,204,101)',
+        tension: 0.1,
+      },
+    ],
+  };
+
+  return data;
 };
 
 /**
@@ -57,7 +99,6 @@ const getChartData = async (workerId) => {
   const endOfMonth = moment().clone().endOf('month').format('YYYY-MM-DDTHH:mm:ssZ');
 
   const jobs = await Log.find({
-    worker: mongoose.Types.ObjectId(workerId),
     createdAt: {
       $gte: startOfMonth,
       $lt: endOfMonth,

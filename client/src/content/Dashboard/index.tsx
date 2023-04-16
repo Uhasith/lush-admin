@@ -3,12 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Grid, Container,Typography,Box } from '@mui/material';
+import { Grid, Container, Typography, Box } from '@mui/material';
 import Footer from 'src/components/Footer';
-import BarChart from 'src/components/Graph/Graph'; 
+import BarChart from 'src/components/Graph/Graph';
 import WatchList from './WatchList';
 import { errorClose } from 'src/store/actions/common.actions';
-
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -37,22 +36,19 @@ const Dashboard = () => {
             <WatchList />
           </Grid>
         </Grid>
-        {/* /////////////////////////Praveen/////////////////////////////// */}
         <br />
         <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ pb: 3 }}
-      >
-        <Typography variant="h3">Data Analyst Monthly Sales</Typography>
-      </Box>
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ pb: 3 }}
+        >
+          <Typography variant="h3">Data Analyst Monthly Sales</Typography>
+        </Box>
 
-  
-       <div className="graph">
-        <BarChart/>
-       </div>
-        {/* //////////////////////////////////////////////////////// */}
+        <div className="graph">
+          <BarChart />
+        </div>
       </Container>
       <Footer />
     </>

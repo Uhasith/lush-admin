@@ -6,10 +6,8 @@ const { reportController } = require('../../controllers');
 
 const router = express.Router();
 
-router.route('/').get(auth('manageReports'), validate(reportValidation.getReports), reportController.getReports);
-router.route('/dashboard').get(auth('manageReports'), reportController.getDashboardData);
-router
-  .route('/detailed-chart/:workerId')
-  .get(auth('manageReports'), validate(reportValidation.getChartData), reportController.getChartData);
+router.route('/').get(validate(reportValidation.getReports), reportController.getReports);
+router.route('/dashboard').get(reportController.getDashboardData);
+router.route('/detailed-chart/:workerId').get(validate(reportValidation.getChartData), reportController.getChartData);
 
 module.exports = router;

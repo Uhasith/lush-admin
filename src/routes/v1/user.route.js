@@ -8,13 +8,13 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
-  .get(auth('manageUsers'), validate(userValidation.getUsers), userController.getUsers);
+  .post(validate(userValidation.createUser), userController.createUser)
+  .get(validate(userValidation.getUsers), userController.getUsers);
 router
   .route('/:userId')
-  .get(auth('manageUsers'), validate(userValidation.getUser), userController.getUser)
-  .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
-  .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
-router.route('/send-email').post(auth('manageUsers'), validate(userValidation.sendEmail), userController.sendEmail);
+  .get(validate(userValidation.getUser), userController.getUser)
+  .patch(validate(userValidation.updateUser), userController.updateUser)
+  .delete(validate(userValidation.deleteUser), userController.deleteUser);
+router.route('/send-email').post(validate(userValidation.sendEmail), userController.sendEmail);
 
 module.exports = router;

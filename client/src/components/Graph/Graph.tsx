@@ -1,20 +1,19 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { dashboardApi } from 'src/apis/dasboard.api';
 
 const BarChart = () => {
-  const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December' ],
-    datasets: [
-      {
-        label: 'Monthly Sales',
-        data: [65, 59, 80, 81, 56, 55, 40,50,78,18,45,23],
-        fill: false,
-        borderColor: 'rgb(156,204,101)',
-        tension: 0.1
-      }
-    ]
+  const [chartData, setChartData] = useState(null);
+
+  useEffect(() => {
+    fetchChartData();
+  }, []);
+
+  const fetchChartData = async () => {
+    const result = await dashboardApi();
+    setChartData(result?.data);
   };
-  
+
   const options = {
     scales: {
       yAxes: [
@@ -29,8 +28,7 @@ const BarChart = () => {
 
   return (
     <div>
-        
-        <Line data={data} options={options} />
+      <Line data={chartData} options={options} />
     </div>
   );
 };
