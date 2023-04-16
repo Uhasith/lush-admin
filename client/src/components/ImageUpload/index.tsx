@@ -57,6 +57,18 @@ const dropZone: any = {
   cursor: 'pointer'
 };
 
+const isLink = (str) => {
+  // Regular expression to match a URL
+  const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+
+  // Check if the string matches the URL regex
+  if (urlRegex.test(str)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const ImageUploader = ({ onImageUpdate, prevImages }) => {
   const [files, setFiles] = useState([]);
 
@@ -109,7 +121,12 @@ const ImageUploader = ({ onImageUpdate, prevImages }) => {
             }}
           />
         ) : (
-          <img src={`${BASE_URL}/documents/product-img/${file}`} style={img} />
+          <img
+            src={
+              isLink(file) ? file : `${BASE_URL}/documents/product-img/${file}`
+            }
+            style={img}
+          />
         )}
       </div>
     </div>

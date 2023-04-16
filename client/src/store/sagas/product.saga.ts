@@ -66,6 +66,7 @@ export function* createProduct({
     const message = 'Product successfully added';
     yield put({ type: SET_SUCCESS_MESSAGE, payload: message });
     yield put({ type: END_LOADING });
+    window.location.reload();
   } catch (error) {
     const message = error?.response?.data?.message || 'Product adding failed';
     yield put({ type: SET_ERROR_MESSAGE, payload: message });
@@ -90,6 +91,7 @@ export function* updateProduct({
     }
 
     yield put({ type: END_LOADING });
+    window.location.reload();
   } catch (error) {
     const message = 'Product updating failed';
     yield put({ type: SET_ERROR_MESSAGE, payload: message });
@@ -113,6 +115,7 @@ export function* deleteProduct({
     yield put({ type: FETCH_ALL_PRODUCTS, payload: filters });
 
     yield put({ type: END_LOADING });
+    window.location.reload();
   } catch (error) {
     const message = 'Product deleting failed';
     yield put({ type: SET_ERROR_MESSAGE, payload: message });
